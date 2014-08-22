@@ -4,14 +4,17 @@
  */
 package nz.ac.aut.mholmwood.graph.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
 /**
  *
  * @author michael
+ * @param <E>
  */
 public class DisjointSets<E> {
     
@@ -49,15 +52,39 @@ public class DisjointSets<E> {
     public boolean addAll(Collection<E> collection){
         boolean allAdded = true;
         
+        //List to add successfully added elements.
+        List<E> added = new ArrayList<>();
+        
         for(final E e : collection){
            if(!makeSet(e)){
                allAdded = false;
+               break;
+           }
+           else {
+               added.add(e);
+           }
+           
+           //Remove any elements successfully added if addAll was not successful.
+           if(!allAdded) {
+               for(E a : added) {
+                   nodeMap.remove(a);
+               }
            }
         }
-        
+    
         return allAdded;
     }
     
+    /**
+     * Remove a set that contains the given element. To be completed.
+     * 
+     * @param element
+     * @return 
+     */    
+    public boolean removeSet(final E element) {
+        return false;
+    }
+        
     public boolean union(E elementOne, E elementTwo){
         TreeNode<E> nodeOne = nodeMap.get(elementOne);
         TreeNode<E> nodeTwo = nodeMap.get(elementTwo);
@@ -65,8 +92,8 @@ public class DisjointSets<E> {
         boolean complete = false;
         
         if(nodeOne != null || nodeTwo != null){
-            TreeNode<E> rootOne = findRoot(nodeOne);
-            TreeNode<E> rootTwo = findRoot(nodeTwo);
+            TreeNode<E> rootOne = DisjointSets.this.findRoot(nodeOne);
+            TreeNode<E> rootTwo = DisjointSets.this.findRoot(nodeTwo);
     
             rootOne.parent = rootTwo;
         }
@@ -75,12 +102,12 @@ public class DisjointSets<E> {
     }
     
     /**
-     * Find the parent for the given element.
+     * Find the root for the given element.
      * @param element
      * @return 
      */
-    public E find(E element){
-        return findRoot(nodeMap.get(element)).element;
+    public E findRoot(E element){
+        return DisjointSets.this.findRoot(nodeMap.get(element)).element;
     }
     
     private TreeNode<E> findRoot(TreeNode<E> node){

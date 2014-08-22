@@ -101,7 +101,7 @@ public enum AlgorithmWgt {
     };
     
     //The value of infinity, used for the matirx of vertex weights.
-    private static int INFINITY = Integer.MAX_VALUE;
+    private static final int INFINITY = Integer.MAX_VALUE;
     
     /**
      * The abstract method used to perform the algorithm.
@@ -144,8 +144,8 @@ public enum AlgorithmWgt {
         
         //Add edges to the disjoint set.
         for(Edge<?> e : list){
-            Vertex<?> rootOne = disjoint.find(e.getVOne());
-            Vertex<?> rootTwo = disjoint.find(e.getVTwo());
+            Vertex<?> rootOne = disjoint.findRoot(e.getVOne());
+            Vertex<?> rootTwo = disjoint.findRoot(e.getVTwo());
             
             if(!(rootOne.equals(rootTwo))){
                 edges.add(e);

@@ -36,6 +36,7 @@ public enum Algorithm {
             if(call != null){
                 call.call(start);
             }
+            
             //Iterate through the remaining vertices in the graph.
             for(Vertex v : g.getVertexSet()){
                 v.setId(++id);
@@ -206,7 +207,7 @@ public enum Algorithm {
     private static Queue<Vertex<?>> queue;
     //Used in DFS if other processing is required.
     private static CallBack call = null;
-    //Used when firding strongly connected components.
+    //Used when finsding strongly connected components.
     private static Deque<Vertex<?>> stack;
     //Used to specifiy the current SCC.
     private static SCComponent sccComponent;
@@ -319,7 +320,7 @@ public enum Algorithm {
             //not destroy links between vertices, just removes them from 
             //the graph. resetPValues will not clear the pre and post
             //calc values, and so these 'removed' vertices will not be
-            //traversed in subsequent runs of DFS. Effictively the 
+            //traversed in subsequent runs of DFS. Effectively the 
             //same thing.
             gPrime.removeVertex((Vertex)v);
             sccComponent.addVertex(v);
